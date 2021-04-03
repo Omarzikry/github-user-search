@@ -21,14 +21,21 @@ const SEmptyScreen = styled.div`
     color: ${(props) => props.theme.colors.purple};
     margin-top: 0.5rem;
   }
+  @media (min-width: 769px) {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
 `;
 
 const EmptyScreen = () => {
   return (
     <SEmptyScreen>
       <img src={discoverImg} alt="" />
-      <h2>No great discovery was ever made without a bold guess</h2>
-      <p>― Isaac Newton</p>
+      <div>
+        <h2>No great discovery was ever made without a bold guess</h2>
+        <p>― Isaac Newton</p>
+      </div>
     </SEmptyScreen>
   );
 };

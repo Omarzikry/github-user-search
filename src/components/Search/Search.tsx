@@ -16,7 +16,7 @@ const SInputContainer = styled.div`
     color: ${(props) => props.theme.colors.black};
     border: none;
     box-shadow: none;
-    padding: 0.625rem 2rem;
+    padding: ${(props) => props.theme.spacing[1]} ${(props) => props.theme.spacing[4]};
     border-radius: 0.5rem;
     &::placeholder {
       color: ${(props) => props.theme.colors.darkGrey};
@@ -24,9 +24,16 @@ const SInputContainer = styled.div`
   }
   img {
     position: absolute;
-    left: 0.5rem;
+    left: ${(props) => props.theme.spacing[0]};
     top: 50%;
     transform: translateY(-50%);
+  }
+  @media (min-width: 769px) {
+    flex: 1;
+    margin-right: 15%;
+    input {
+      width: 100%;
+    }
   }
 `;
 
@@ -41,7 +48,8 @@ const Search = (props: SearchProps) => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    setSearchInput(value);
+
+    setSearchInput(value.replace(/\s/g, ""));
     if (value.length > 0) {
       setIsBtnDisabled(false);
     } else {

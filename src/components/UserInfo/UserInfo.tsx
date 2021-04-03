@@ -20,6 +20,11 @@ const SUserHeader = styled.div`
       display: block;
     }
   }
+  @media (min-width: 769px) {
+    a {
+      font-size: 2rem;
+    }
+  }
 `;
 
 const SImgContainer = styled.div`
@@ -31,12 +36,19 @@ const SImgContainer = styled.div`
     object-fit: cover;
     border-radius: 0.5rem;
   }
+  @media (min-width: 769px) {
+    width: 10rem;
+    height: 10rem;
+  }
 `;
 
 const SUserDescription = styled.p`
   color: ${(props) => props.theme.colors.grey};
   font-size: 0.875rem;
   line-height: 1.35em;
+  @media (min-width: 769px) {
+    font-size: 1rem;
+  }
 `;
 
 interface UserInfoProps {
