@@ -6,7 +6,7 @@ import Loader from "../../components/Loader/Loader";
 import ReposGrid from "../../components/ReposGrid/ReposGrid";
 import UserInfo from "../../components/UserInfo/UserInfo";
 import api from "../../utils/api";
-
+import { validateUser } from "../../utils/models";
 const SErrorDisplay = styled.p`
   padding: 1rem;
   text-align: center;
@@ -19,6 +19,13 @@ export interface User {
   avatar: string | null;
   bio: string | null;
   url: string;
+}
+export interface UserResponse {
+  html_url: string;
+  avatar_url: string;
+  name: string;
+  id: number;
+  bio: string | null;
 }
 
 export interface Repo {
@@ -42,14 +49,14 @@ const GithubUser = () => {
     setErr("");
 
     try {
-      const res = await api.get(`/users/${searchTerm}`);
+      const res: UserResponse = await getUser(searchTerm);
 
       setUser({
-        id: res.data.id,
-        name: res.data.name,
-        avatar: res.data.avatar_url,
-        bio: res.data.bio,
-        url: res.data.html_url,
+        id: res.id,
+        name: res.name,
+        avatar: res.avatar_url,
+        bio: res.bio,
+        url: res.html_url,
       });
 
       setIsUserLoading(false);
@@ -81,6 +88,15 @@ const GithubUser = () => {
       setIsReposLoading(false);
     }
   };
+
+  async function getUser(searchTerm: string): Promise<any> {
+    const res = await api.get(`/users/${searchTerm}`);
+    const userRes = validateUser(res.data);
+    if (userRes.type === "Err") {
+      console.error(userRes.error);
+    }
+    return userRes.type === "Ok" ? userRes.value : undefined;
+  }
 
   return (
     <>
